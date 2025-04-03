@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>给严菲萱的星轨生日站</title>
+    <div class="title">《夜繁星》</div>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6f1ff;
+            font-family: 'Microsoft YaHei', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .message {
+            border: 1px solid transparent;
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            max-width: 600px;
+            margin: 20px;
+            transition: all 1s ease 0.5s;
+        }
+        .message h2, 
+	#lyrics {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1s ease;
+        }
+        .reveal {
+            border-color: rgba(230, 241, 255, 0.2);
+        }
+        .reveal h2,
+        .reveal #lyrics {
+            opacity: 1;
+            visibility: visible;
+        }
+        .title {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: rgba(230, 241, 255, 0.8);
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+            user-select: none;
+        }
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 60%;
+            animation: twinkle 1.2s infinite;
+            box-shadow: 0 0 8px rgba(255,255,255,0.6);
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        #secretButton {
+            background: none;
+            border: 1px solid #4cc9f0;
+            color: #4cc9f0;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        #secretButton:hover {
+            background: rgba(76, 201, 240, 0.1);
+        }
+        .progress-container {
+            width: 200px;
+            height: 4px;
+            background: rgba(76, 201, 240, 0.2);
+            margin: 15px auto;
+            display: none;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #4cc9f0;
+            transition: width 10s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .meteor {
+            position: fixed;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(270deg, transparent 0%, #fff 80%);
+            animation: meteorFall linear forwards;
+            opacity: 0;
+            transform-origin: right center;
+        }
+        @keyframes meteorFall {
+            0% { 
+                opacity: 1;
+                transform: translate(-10px, -10px) rotate(-150deg);
+            }
+            100% { 
+                transform: translate(100vw, 100vh) rotate(-150deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 动态星空背景 -->
+    <script>
+        for(let i=0; i<120; i++){
+            let star = document.createElement("div");
+            star.className = "star";
+            star.style.width = Math.random()*4 + "px";
+            star.style.height = star.style.width;
+            star.style.left = Math.random()*100 + "%";
+            star.style.top = Math.random()*100 + "%";
+            star.style.animationDelay = Math.random()*2 + "s";
+            document.body.appendChild(star);
+        }
+    </script>
+
+    <div class="message">
+        <h2>🪐 严菲萱的第18个星际周期 🎂</h2>
+        <div id="lyrics">
+            <marquee direction="up" height="150px" scrollamount="2">
+                ✦ 千古彗尾耀寰宇，凝作青丝垂九霄<br>
+                ✦ 弧光纵贯周天幕，难绘颦蛾莲步妖<br>
+                ✦ 在银河系猎户旋臂的某个角落<br>
+                ✦ 今天有颗小行星被命名为"YanFX-0406"<br>
+                ✦ 愿新一岁的你比超新星更耀眼<br>
+                ✦ 此空间将在一周后自动坍缩...
+            </marquee>
+        </div>
+        <button id="secretButton" onclick="showSecret()">🛸 点击接收引力波信号</button>
+    </div>
+    <div class="progress-container">
+        <div class="progress-bar">
+    </div>
+
+    <script>
+        function createMeteor() {
+            const meteor = document.createElement('div');
+            meteor.className = 'meteor';
+            const duration = Math.random() * 3 + 2;
+            meteor.style.animationDuration = `${duration}s`;
+
+            const isLeftEdge = Math.random() > 0.5;
+            
+            if(isLeftEdge) {
+                meteor.style.left = "0px";
+                meteor.style.top = Math.random() * 80 + "vh";
+                meteor.style.transform = "rotate(-150deg) translate(-10px, -10px)";
+            } else {
+                meteor.style.top = "0px";
+                meteor.style.left = Math.random() * 80 + "vw";
+                meteor.style.transform = "rotate(-150deg) translate(-10px, -10px)";
+            }
+            document.body.appendChild(meteor);
+            setTimeout(() => meteor.remove(), duration * 1000);
+        }
+
+        function showSecret() {
+            const progressContainer = document.querySelector('.progress-container');
+            const progressBar = document.querySelector('.progress-bar');
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+            void progressBar.offsetWidth;
+            progressBar.style.width = '100%';
+
+        let interval = 800;
+        let intensity = 1;
+        let lastMeteorTime = 0;
+        const MIN_INTERVAL = 50;
+        
+        const generateWithInterval = () => {
+            const now = Date.now();
+            if(now - lastMeteorTime >= MIN_INTERVAL) {
+                createMeteor();
+                lastMeteorTime = now;
+                return true;
+            }
+            return false;
+        }
+
+        const progressTimer = setInterval(() => {
+            const desiredCount = Math.min(2, intensity);
+            let created = 0;
+            const tryGenerate = () => {
+                if(created < desiredCount) {
+                    if(generateWithInterval()) {
+                        created++;
+                    }
+                    setTimeout(tryGenerate, MIN_INTERVAL);
+                }
+            }
+            tryGenerate();
+
+            if(Date.now() % 1300 < 50) { 
+                intensity = Math.min(7, intensity + 1);
+            }
+            
+            interval = Math.max(80, interval * 0.93);
+        }, 150);
+
+            const btn = document.getElementById('secretButton');
+            btn.innerHTML = "🛸 引力波接收中...";
+            btn.onclick = null;
+
+            setTimeout(() => {
+                clearInterval(progressTimer);
+                progressContainer.style.display = 'none';
+                progressBar.style.width = '0%';
+                const title = document.querySelector('.message h2');
+                const lyrics = document.querySelector('#lyrics');
+                document.querySelector('.message').classList.add('reveal');
+                title.style.opacity = '1';
+                title.style.visibility = 'visible';
+                lyrics.style.opacity = '1';
+                lyrics.style.visibility = 'visible';
+                btn.innerHTML = '📡 频率匹配成功！<br>若满意请发送1至：<br>2965483581@qq.com';
+            }, 10000);
+        }
+    </script>
+</body>
+</html>
